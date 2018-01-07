@@ -37,18 +37,14 @@ public class GrammarRunner<T> {
      * @return T an instance of type T which results from the generation.
      */
     // While a faster implementation might do some extra work to avoid calls to known GroundTokens, this will
-    // only yield a speedup in the presence of a very large number of tokens.
+    // only yield a practical speedup in the presence of a very large number of tokens.
     public T run(Random rand) {
         tokenBuffer[0] = grammar.generateRootToken();
+        tokenBuffer[1] = null;
 
         boolean tokensChanged = true;
         while (tokensChanged) {
             tokensChanged = false;
-
-            // Swap front and back buffers.
-            GrammarToken[] temp = tokenBuffer;
-            tokenBuffer = backBuffer;
-            backBuffer = temp;
 
             int i = 0; // i points to indices in tokenBuffer
             int j = 0; // j points to indices in backBuffer
@@ -63,8 +59,13 @@ public class GrammarRunner<T> {
                     backBuffer[j] = null; // Ensure back buffer is null-terminated.
                 }
             }
+            if(tokensChanged) {
+                // Swap front and back buffers.
+                GrammarToken[] temp = tokenBuffer;
+                tokenBuffer = backBuffer;
+                backBuffer = temp;
+            }
         }
-
 
         T result = grammar.blank();
         int i = 0;
