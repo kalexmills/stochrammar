@@ -6,12 +6,10 @@ import java.util.Random;
 /**
  * A GroundToken can no longer be replaced, and provides an act method which acts on an object of type T.
  */
-@IgnoreContext
 public abstract class GroundToken<T> implements GrammarToken<T> {
 
     /**
-     * The implementation for GroundTokens returns null to indicate that they cannot be replaced, and should be
-     * cast to GroundTokens.
+     * The implementation for GroundTokens return null to indicate that they cannot be replaced.
      */
     @Override
     public GrammarToken<T>[] replace(Random rand) {

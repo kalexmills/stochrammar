@@ -54,9 +54,13 @@ public class GrammarRunner<T> {
                     tokensChanged = true;
                     for (int k = 0; k < tokens.length; k++) {
                         backBuffer[j++] = tokens[k];
-                        if(j > backBuffer.length) extendBackBuffer();
+                        if(j >= backBuffer.length) extendBackBuffer();
                     }
                     backBuffer[j] = null; // Ensure back buffer is null-terminated.
+                } else {
+                    // We received null: this was a ground token and we need to keep it.
+                    backBuffer[j++] = tokenBuffer[i-1];
+                    if(j >= backBuffer.length) extendBackBuffer();
                 }
             }
             if(tokensChanged) {
@@ -75,7 +79,10 @@ public class GrammarRunner<T> {
         return result;
     }
 
-    // Doubles the size of the back buffer. This change eventually propagates to the front buffer.
+    /**
+     * Doubles the size of the back buffer. This change eventually propagates to the front buffer, which means it
+     * is usually invoked twice
+     */
     private void extendBackBuffer() {
         backBuffer = Arrays.copyOf(backBuffer, backBuffer.length * 2);
     }

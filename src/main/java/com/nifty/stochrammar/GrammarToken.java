@@ -10,6 +10,16 @@ import java.util.Random;
  */
 public interface GrammarToken<T> {
     /**
+     * A grammar token which returns an empty array.
+     */
+    GrammarToken EMPTY = new GrammarToken() {
+        @Override
+        public GrammarToken[] replace(Random rand) {
+            return new GrammarToken[0];
+        }
+    };
+
+    /**
      * Replaces this GrammarToken with one or more others. Repeated invocations must return a ground token within a
      * finite number of invocations which number is independent of the rand argument passed.
      *
