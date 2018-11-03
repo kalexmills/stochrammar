@@ -8,4 +8,4 @@ If you find that they do not, open an issue (this software is young, yet).
 See `WeightedGrammar.java` for an example implementation.
 
 ### Brief History
-An earlier, proprietary version of this library was used in the development of [Tweeter in Chief](https://play.google.com/store/apps/details?id=com.niftysoft.tweeter). Since then, the copyright holder released a modified version of the library under the AGPL on November 3rd, 2018.
+An earlier, proprietary version of this library was used in the development of [Tweeter in Chief](https://play.google.com/store/apps/details?id=com.niftysoft.tweeter). The copyright holder released an updated version of the library under the AGPL on November 3rd, 2018.
