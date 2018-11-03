@@ -47,4 +47,15 @@ public interface GrammarToken<T> {
      * @return an array of non-null GrammarTokens, or null if there are no more replacements available for this token.
      */
     GrammarToken<T>[] replace(Random rand);
+
+    /**
+     * Acts independently on an object of type T, possibly modifying its state. The same argument is returned to enable
+     * chaining (if desired).
+     *
+     * By default, the act method is a no-op.
+     *
+     * @param object T object on which this token acts.
+     * @return T the same argument which was passed in.
+     */
+    default T act(T object) { return object; };
 }

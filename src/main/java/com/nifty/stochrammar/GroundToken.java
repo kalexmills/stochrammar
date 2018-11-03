@@ -23,7 +23,7 @@ import java.util.Random;
 /**
  * A GroundToken can no longer be replaced, and provides an act method which acts on an object of type T.
  */
-public abstract class GroundToken<T> implements GrammarToken<T> {
+public abstract class GroundToken<T> implements GrammarToken<T>, ActingToken<T> {
 
     /**
      * The implementation for GroundTokens return null to indicate that they cannot be replaced.
@@ -33,12 +33,5 @@ public abstract class GroundToken<T> implements GrammarToken<T> {
         return null;
     }
 
-    /**
-     * Acts independently on an object of type T, possibly modifying its state. The same argument is returned to enable
-     * chaining (if desired).
-     *
-     * @param object T object on which this token acts.
-     * @return T the same argument which was passed in.
-     */
     public abstract T act(T object);
 }
