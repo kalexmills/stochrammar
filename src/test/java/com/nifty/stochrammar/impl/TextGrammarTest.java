@@ -1,6 +1,6 @@
 package com.nifty.stochrammar.impl;
 
-import com.nifty.stochrammar.SequenceRunner;
+import com.nifty.stochrammar.runner.SequenceRunner;
 import org.junit.Test;
 
 import java.util.regex.Pattern;

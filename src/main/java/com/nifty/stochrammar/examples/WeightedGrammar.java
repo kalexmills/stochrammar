@@ -3,14 +3,14 @@ package com.nifty.stochrammar.examples;
 
 import com.nifty.stochrammar.GrammarToken;
 import com.nifty.stochrammar.GroundToken;
-import com.nifty.stochrammar.SequenceRunner;
+import com.nifty.stochrammar.runner.SequenceRunner;
 import com.nifty.stochrammar.StochasticGrammar;
 
 import java.util.Random;
 
 /**
  * WeightedGrammar provides an example implementation that demonstrates how random weighting can be implemented by
- * client code. The grammar implemented follows the below weighted BNF grammar, in which the RHS of each production
+ * client code. The grammar implemented here follows the below weighted BNF grammar, in which the RHS of each production
  * rule is labeled with its probability of occurrence.
  *
  * ROOT := AB(0.2) | A(0.2) | ROOT(0.6)
