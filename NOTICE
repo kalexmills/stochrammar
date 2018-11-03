@@ -1,0 +1,4 @@
+This library cannot interact with its users over a network. As such, there is no expectation that the software itself
+will provide a link back to the source repository.
+
+In any case, you can find the source at https://github.com/kalexmills/stochrammar.
