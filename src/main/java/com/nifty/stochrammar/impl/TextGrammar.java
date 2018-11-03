@@ -10,8 +10,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
- * A grammar which returns plaintext. Contains a list of production rules, each of which is associated with a string
- * key.
+ * A generic grammar which returns plaintext in the form of StringBuilders. Clients can add ProductionRules, each of
+ * which is associated with a unique string key. The key "ROOT" is reserved for the root production rule.
+ *
+ * TODO: provide convenient Builder class.
  */
 public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarToken<StringBuilder> {
 
@@ -23,6 +25,12 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
         replaceMap = new HashMap<>();
     }
 
+    /**
+     * addRule adds a ProductionRule to this TextGrammar.
+     *
+     * @param key String key associated with the LHS of the ProductionRule added
+     * @param tokens BaseToken... list of BaseTokens associated with the RHS of the ProductionRule added.
+     */
     public void addRule(String key, BaseToken... tokens) {
         if(!replaceMap.containsKey(key)) replaceMap.put(key, new ArrayList<BaseToken[]>());
         replaceMap.get(key).add(tokens);
@@ -46,17 +54,17 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
     }
 
     /**
-     * Used only to provide a base from which to inherit.
+     * BaseToken provides a convenient base interface from which to inherit.
      */
     public interface BaseToken extends GrammarToken<StringBuilder> {}
 
     /**
-     * A token which containts only a string literal.
+     * Literal is a GroundToken which contains only a string literal.
      */
-    public class StringToken extends GroundToken<StringBuilder> implements BaseToken {
+    public class Literal extends GroundToken<StringBuilder> implements BaseToken {
         String text;
 
-        public StringToken(String text) {
+        public Literal(String text) {
             this.text = text;
         }
         public StringBuilder act(StringBuilder str) {
@@ -65,15 +73,16 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
     }
 
     /**
-     * A token which contains only a non-literal to be replaced. Accepts a key
+     * ProductionRule is a BaseToken uniquely identified by a string Key, which is replaced by other BaseToken
+     * instances.
      */
-    public class ReplaceToken implements BaseToken {
+    public class ProductionRule implements BaseToken {
         String key;
 
         /**
          * @param key String the key for the replacement rule
          */
-        public ReplaceToken(String key) {
+        public ProductionRule(String key) {
             this.key = key;
         }
 
@@ -92,6 +101,9 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
         }
     }
 
+    /**
+     * ReplaceException is thrown when a replacement refers to the key of a non-existent ProductionRule.
+     */
     public static class ReplaceException extends IllegalStateException {
         public ReplaceException(String reason) {
             super(reason);

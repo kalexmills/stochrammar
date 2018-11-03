@@ -11,11 +11,11 @@ public interface StochasticGrammar<T> {
      * Generates a new root token for this grammar.
      * @return
      */
-    public GrammarToken<T> generateRootToken();
+    GrammarToken<T> generateRootToken();
 
     /**
      * Generates a "blank" instance of the object to be acted on.
      * @return a newly constructed "blank" instance of object T
      */
-    public T blank();
+    T blank();
 }

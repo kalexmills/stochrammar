@@ -17,9 +17,9 @@ import java.util.Random;
  * A := "a"(0.5) | "A"(0.5)
  * B := "b"(0.5) | "B"(0.5)
  */
-public class ExampleGrammar implements StochasticGrammar<String> {
+public class WeightedGrammar implements StochasticGrammar<String> {
 
-    public ExampleGrammar() {
+    public WeightedGrammar() {
 
     }
 
@@ -70,7 +70,7 @@ public class ExampleGrammar implements StochasticGrammar<String> {
     }
 
     public static void main(String[] args) {
-        SequenceRunner<String> runner = new SequenceRunner<>(new ExampleGrammar());
+        SequenceRunner<String> runner = new SequenceRunner<>(new WeightedGrammar());
 
         int n = 100;
         for (int i = 0; i < n; ++i) {
