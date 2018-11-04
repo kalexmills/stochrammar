@@ -21,12 +21,12 @@ package com.nifty.stochrammar;
 import java.util.Random;
 
 /**
- * A GroundToken can no longer be replaced, and provides an act method which acts on an object of type T.
+ * A GroundToken can not be replaced, and provides an act method which acts on an object of type T.
  */
-public abstract class GroundToken<T> implements GrammarToken<T>, ActingToken<T> {
+public abstract class GroundToken<T> implements GrammarToken<T> {
 
     /**
-     * The implementation for GroundTokens return null to indicate that they cannot be replaced.
+     * @reutrn null to indicate that this ground token cannot be replaced.
      */
     @Override
     public GrammarToken<T>[] replace(Random rand) {
