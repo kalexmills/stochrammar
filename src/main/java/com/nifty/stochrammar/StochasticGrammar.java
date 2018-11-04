@@ -31,8 +31,8 @@ public interface StochasticGrammar<T> {
     GrammarToken<T> generateRootToken();
 
     /**
-     * Generates a "blank" instance of the object to be acted on.
-     * @return a newly constructed "blank" instance of object T
+     * Generates a "blankEntity" instance of the object to be acted on.
+     * @return a newly constructed "blankEntity" instance of object T
      */
-    T blank();
+    T blankEntity();
 }
