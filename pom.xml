@@ -4,12 +4,12 @@
                       http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nifty</groupId>
-    <artifactId>stochrammar</artifactId>
+    <artifactId>stochrammer</artifactId>
     <packaging>jar</packaging>
     <version>0.1-SNAPSHOT</version>
 
-    <name>Stochrammar Library</name>
-    <url>http://github.com/kalexmills/stochrammar</url>
+    <name>Stochrammer Library</name>
+    <url>http://github.com/kalexmills/stochrammer</url>
 
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
