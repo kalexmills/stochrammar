@@ -49,7 +49,7 @@ public interface GrammarToken<T> {
      * implementer is entirely responsible.
      *
      * @param rand Random random number generator to use.
-     * @return an array of non-null GrammarTokens, or null if there are no more replacements available for this token.
+     * @return an array of non-null GrammarTokens, or an empty array if this GrammarToken is a GroundToken.
      */
     GrammarToken<T>[] replace(Random rand);
 
