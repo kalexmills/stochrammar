@@ -20,7 +20,7 @@ package com.nifty.stochrammar.examples;
 
 import com.nifty.stochrammar.GrammarToken;
 import com.nifty.stochrammar.GroundToken;
-import com.nifty.stochrammar.runner.SequenceRunner;
+import com.nifty.stochrammar.runner.GroundSequenceRunner;
 import com.nifty.stochrammar.StochasticGrammar;
 
 import java.util.Random;
@@ -46,7 +46,7 @@ public class WeightedGrammar implements StochasticGrammar<String> {
     }
 
     @Override
-    public String blank() {
+    public String blankEntity() {
         return new String();
     }
 
@@ -87,7 +87,7 @@ public class WeightedGrammar implements StochasticGrammar<String> {
     }
 
     public static void main(String[] args) {
-        SequenceRunner<String> runner = new SequenceRunner<>(new WeightedGrammar());
+        GroundSequenceRunner<String> runner = new GroundSequenceRunner<>(new WeightedGrammar());
 
         int n = 100;
         for (int i = 0; i < n; ++i) {

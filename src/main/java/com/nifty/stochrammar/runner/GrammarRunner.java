@@ -44,7 +44,7 @@ public abstract class GrammarRunner<T> {
     /**
      * run(Random) generates a new object of type T using the Random instance passed in. The implementation of this
      * method defines the order in which the GrammarToken::act methods of the StochasticGrammar passed in will get
-     * called on the blank object(s) that are produced by the grammar.
+     * called on the blankEntity object(s) that are produced by the grammar.
      *
      * @param rand Random the RNG to use during the run.
      * @return T a generated object

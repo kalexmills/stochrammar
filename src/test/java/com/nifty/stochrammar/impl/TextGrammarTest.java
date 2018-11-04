@@ -18,7 +18,7 @@
  */
 package com.nifty.stochrammar.impl;
 
-import com.nifty.stochrammar.runner.SequenceRunner;
+import com.nifty.stochrammar.runner.GroundSequenceRunner;
 import org.junit.Test;
 
 import java.util.regex.Pattern;
@@ -47,7 +47,7 @@ public class TextGrammarTest {
         g.addRule(g.ROOT_KEY, g.new Literal("abra"), g.new ProductionRule(g.ROOT_KEY));
         g.addRule(g.ROOT_KEY, g.new Literal("cadabra"), g.new ProductionRule(g.ROOT_KEY));
 
-        SequenceRunner<StringBuilder> runner = new SequenceRunner<>(g);
+        GroundSequenceRunner<StringBuilder> runner = new GroundSequenceRunner<>(g);
 
         int n = 100;
         int maxLength = 0;
@@ -68,7 +68,7 @@ public class TextGrammarTest {
         g.addRule(g.ROOT_KEY, g.new Literal("abra"), g.new ProductionRule(g.ROOT_KEY));
         g.addRule(g.ROOT_KEY, g.new Literal("cadabra"), g.new ProductionRule(g.ROOT_KEY));
 
-        SequenceRunner<StringBuilder> runner = new SequenceRunner<>(g);
+        GroundSequenceRunner<StringBuilder> runner = new GroundSequenceRunner<>(g);
 
         int n = 100;
         for (int i = 0; i < n; i++) {
@@ -84,7 +84,7 @@ public class TextGrammarTest {
         g.addRule("A", g.new Literal("abra"),
                            g.new Literal("cadabra"));
 
-        SequenceRunner<StringBuilder> runner = new SequenceRunner<>(g);
+        GroundSequenceRunner<StringBuilder> runner = new GroundSequenceRunner<>(g);
 
         assertThat(runner.run().toString(), is(equalTo("")));
 

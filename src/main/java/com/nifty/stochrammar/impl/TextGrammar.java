@@ -66,7 +66,7 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
     }
 
     @Override
-    public StringBuilder blank() {
+    public StringBuilder blankEntity() {
         return new StringBuilder();
     }
 
