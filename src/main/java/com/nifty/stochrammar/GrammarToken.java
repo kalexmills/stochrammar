@@ -21,7 +21,7 @@ package com.nifty.stochrammar;
 import java.util.Random;
 
 /**
- * Encapsulates a single token of a context-free grammar. Tokens may be replaced by other tokens. Each type of token may
+ * Encapsulates a single token of a context-free grammar. Tokens may generate other tokens. Each type of token may
  * define the means of its own replacement via GrammarToken::replace.
  *
  * @param <T> extends Grammarable the type of object which this stochastic grammar can produce.
