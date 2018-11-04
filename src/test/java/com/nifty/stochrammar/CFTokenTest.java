@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GrammarTokenTest {
+public class CFTokenTest {
     @Test
     public void testEmptyToken() {
-        assertThat(GrammarToken.EMPTY).hasSize(0);
+        assertThat(CFToken.EMPTY).hasSize(0);
     }
 }

@@ -1,6 +1,6 @@
 package com.nifty.stochrammar.runner;
 
-import com.nifty.stochrammar.GrammarToken;
+import com.nifty.stochrammar.CFToken;
 import com.nifty.stochrammar.GroundToken;
 import com.nifty.stochrammar.StochasticGrammar;
 import org.junit.Test;
@@ -16,15 +16,17 @@ public class TreeRunnerTest {
      */
     private static class Ground extends GroundToken<String> {
         String val;
-        public Ground(String val) { this.val = val;}
-        public String act(String str) { return str + val; }
+        public Ground(String val) {
+            this.val = val;
+            this.setAction((str) -> str + val);
+        }
     }
 
     @Test
     public void testReplacesGrammarTokensWithGrounds() {
-        class TokenA implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[] { new Ground("b") };
+        class TokenA extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[] { new Ground("b") };
             }
         }
         /**
@@ -32,7 +34,7 @@ public class TreeRunnerTest {
          * B -> "b"
          */
         class Grammar implements StochasticGrammar<String> {
-            public GrammarToken<String> generateRootToken() {
+            public CFToken<String> generateRootToken() {
                 return new TokenA();
             }
 
@@ -53,21 +55,21 @@ public class TreeRunnerTest {
          * B -> C
          * C -> "abc chain replaced with ground"
          */
-        class TokenC implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[] { new Ground("abc chain replaced with ground") };
+        class TokenC extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[] { new Ground("abc chain replaced with ground") };
             }
         }
-        class TokenB implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[]{new TokenC()};
+        class TokenB extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[]{new TokenC()};
             }
         }
-        class TokenA implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[] { new TokenB() }; }
+        class TokenA extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new TokenB() }; }
         }
         class Grammar implements StochasticGrammar<String> {
-            public GrammarToken<String> generateRootToken() {
+            public CFToken<String> generateRootToken() {
                 return new TokenA();
             }
 
@@ -83,16 +85,16 @@ public class TreeRunnerTest {
 
     @Test
     public void testBranchingProductionRule() {
-        class TokenC implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[] { new Ground("world") };
+        class TokenC extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[] { new Ground("world") };
             }
         }
-        class TokenB implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[]{new Ground("hello ")}; }
+        class TokenB extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[]{new Ground("hello ")}; }
         }
-        class TokenA implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[] { new TokenB(), new TokenC() }; }
+        class TokenA extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new TokenB(), new TokenC() }; }
         }
         /**
          * A -> BC
@@ -100,7 +102,7 @@ public class TreeRunnerTest {
          * C -> "world"
          */
         class Grammar implements StochasticGrammar<String> {
-            public GrammarToken<String> generateRootToken() {
+            public CFToken<String> generateRootToken() {
                 return new TokenA();
             }
 
@@ -117,15 +119,17 @@ public class TreeRunnerTest {
 
     @Test
     public void testInvokesActOnNonGroundTokens() {
-        class TokenA implements GrammarToken<String> {
-            public String act(String str) { return "A"; }
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[] { new Ground("B") }; }
+        class TokenA extends CFToken<String> {
+            public TokenA() {
+                this.setAction((str) -> "A");
+            }
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new Ground("B") }; }
         }
         /**
          * A -> "AB"
          */
         class Grammar implements StochasticGrammar<String> {
-            public GrammarToken<String> generateRootToken() {
+            public CFToken<String> generateRootToken() {
                 return new TokenA();
             }
 
@@ -153,26 +157,26 @@ public class TreeRunnerTest {
      */
     class TraversalTestGrammar implements StochasticGrammar<String> {
 
-        class TokenE implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[] { new Ground("e") };
+        class TokenE extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[] { new Ground("e") };
             }
         }
-        class TokenD implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) {
-                return new GrammarToken[] { new Ground("d") };
+        class TokenD extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) {
+                return new CFToken[] { new Ground("d") };
             }
         }
-        class TokenC implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[] { new Ground("c") }; }
+        class TokenC extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new Ground("c") }; }
         }
-        class TokenB implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[]{ new Ground("b"), new TokenD(), new TokenE(), new Ground("b")}; }
+        class TokenB extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[]{ new Ground("b"), new TokenD(), new TokenE(), new Ground("b")}; }
         }
-        class TokenA implements GrammarToken<String> {
-            public GrammarToken<String>[] replace(Random rand) { return new GrammarToken[] { new Ground("a"), new TokenB(), new TokenC(), new Ground("a") }; }
+        class TokenA extends CFToken<String> {
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new Ground("a"), new TokenB(), new TokenC(), new Ground("a") }; }
         }
-        public GrammarToken<String> generateRootToken() {
+        public CFToken<String> generateRootToken() {
             return new TokenA();
         }
 

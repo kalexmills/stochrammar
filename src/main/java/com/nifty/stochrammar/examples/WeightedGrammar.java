@@ -18,7 +18,7 @@
  */
 package com.nifty.stochrammar.examples;
 
-import com.nifty.stochrammar.GrammarToken;
+import com.nifty.stochrammar.CFToken;
 import com.nifty.stochrammar.GroundToken;
 import com.nifty.stochrammar.runner.GroundSequenceRunner;
 import com.nifty.stochrammar.StochasticGrammar;
@@ -41,7 +41,7 @@ public class WeightedGrammar implements StochasticGrammar<String> {
     }
 
     @Override
-    public GrammarToken<String> generateRootToken() {
+    public CFToken<String> generateRootToken() {
         return new RootToken();
     }
 
@@ -50,29 +50,29 @@ public class WeightedGrammar implements StochasticGrammar<String> {
         return new String();
     }
 
-    private static class RootToken implements GrammarToken<String> {
+    private static class RootToken extends CFToken<String> {
         @Override
-        public GrammarToken<String>[] replace(Random rand) {
+        public CFToken<String>[] replace(Random rand) {
             float sample = rand.nextFloat();
-            if (sample < 0.2f) return new GrammarToken[] { new A(), new B() };
-            if (sample < 0.4f) return new GrammarToken[] { new A() };
-                               return new GrammarToken[] { new RootToken() };
+            if (sample < 0.2f) return new CFToken[] { new A(), new B() };
+            if (sample < 0.4f) return new CFToken[] { new A() };
+                               return new CFToken[] { new RootToken() };
         }
     }
 
-    private static class A implements GrammarToken<String> {
-        public GrammarToken<String>[] replace(Random rand) {
+    private static class A extends CFToken<String> {
+        public CFToken<String>[] replace(Random rand) {
             float sample = rand.nextFloat();
-            if (sample < 0.5f) return new GrammarToken[] { new Base("a")};
-                               return new GrammarToken[] { new Base("A")};
+            if (sample < 0.5f) return new CFToken[] { new Base("a")};
+                               return new CFToken[] { new Base("A")};
         }
     }
 
-    private static class B implements GrammarToken<String> {
-        public GrammarToken<String>[] replace(Random rand) {
+    private static class B extends CFToken<String> {
+        public CFToken<String>[] replace(Random rand) {
             float sample = rand.nextFloat();
-            if (sample < 0.5f) return new GrammarToken[] { new Base("b")};
-                               return new GrammarToken[] { new Base("B")};
+            if (sample < 0.5f) return new CFToken[] { new Base("b")};
+                               return new CFToken[] { new Base("B")};
         }
     }
 
@@ -80,9 +80,7 @@ public class WeightedGrammar implements StochasticGrammar<String> {
         private String token;
         public Base(String token) {
             this.token = token;
-        }
-        public String act(String str) {
-            return str + token;
+            this.setAction((str) -> str.concat(token));
         }
     }
 

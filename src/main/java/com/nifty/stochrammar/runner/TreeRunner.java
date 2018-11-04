@@ -18,7 +18,7 @@
  */
 package com.nifty.stochrammar.runner;
 
-import com.nifty.stochrammar.GrammarToken;
+import com.nifty.stochrammar.CFToken;
 import com.nifty.stochrammar.StochasticGrammar;
 
 import java.util.*;
@@ -63,7 +63,7 @@ public class TreeRunner<T> extends GrammarRunner<T> {
         while(!frontier.isEmpty()) {
             TreeNode<T> node = frontier.pop();
 
-            GrammarToken[] tokens = node.token.replace(rand);
+            CFToken[] tokens = node.token.replace(rand);
             if (tokens != null) {
 
                 node.addChildren(tokens);
@@ -141,7 +141,7 @@ public class TreeRunner<T> extends GrammarRunner<T> {
     }
 
     /**
-     * TreeNode wraps GrammarToken, providing an n-ary tree structure on top of it.
+     * TreeNode wraps CFToken, providing an n-ary tree structure on top of it.
      * @param <T>
      */
     private static class TreeNode<T> {
@@ -149,18 +149,18 @@ public class TreeRunner<T> extends GrammarRunner<T> {
         private static final int DEFAULT_ARITY = 4;
         private TreeNode[] children;
         private int nChildren = 0;
-        GrammarToken<T> token;
+        CFToken<T> token;
 
-        public TreeNode(GrammarToken<T> token) {
+        public TreeNode(CFToken<T> token) {
             this(token, DEFAULT_ARITY);
         }
 
-        public TreeNode(GrammarToken<T> token, int arity) {
+        public TreeNode(CFToken<T> token, int arity) {
             this.token = token;
             this.children = new TreeNode[4];
         }
 
-        public void addChildren(GrammarToken<T>... tokens) {
+        public void addChildren(CFToken<T>... tokens) {
             // Double size of children array if needed.
             if (nChildren + tokens.length < children.length) {
                 int newLen = Math.max(children.length*2, nChildren + tokens.length);

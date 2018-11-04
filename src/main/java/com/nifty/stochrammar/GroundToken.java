@@ -23,15 +23,14 @@ import java.util.Random;
 /**
  * A GroundToken can not be replaced, and provides an act method which acts on an object of type T.
  */
-public abstract class GroundToken<T> implements GrammarToken<T> {
+public abstract class GroundToken<T> extends CFToken<T> {
 
     /**
      * @reutrn an empty array to indicate that this ground token cannot be replaced.
      */
     @Override
-    public GrammarToken<T>[] replace(Random rand) {
-        return GrammarToken.EMPTY;
+    public CFToken<T>[] replace(Random rand) {
+        return CFToken.EMPTY;
     }
 
-    public abstract T act(T object);
 }

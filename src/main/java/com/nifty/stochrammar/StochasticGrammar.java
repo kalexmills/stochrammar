@@ -28,7 +28,7 @@ public interface StochasticGrammar<T> {
      * Generates a new root token for this grammar.
      * @return
      */
-    GrammarToken<T> generateRootToken();
+    CFToken<T> generateRootToken();
 
     /**
      * Generates a "blankEntity" instance of the object to be acted on.

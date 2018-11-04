@@ -18,8 +18,7 @@
  */
 package com.nifty.stochrammar.runner;
 
-import com.nifty.stochrammar.GrammarToken;
-import com.nifty.stochrammar.GroundToken;
+import com.nifty.stochrammar.CFToken;
 import com.nifty.stochrammar.StochasticGrammar;
 
 import java.util.Arrays;
@@ -39,13 +38,13 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
 
     // Null-terminated buffers used to collect tokens as they are created.
     // N.B.: A more space-efficient implementation would probably use one set of buffers per running thread.
-    private GrammarToken[] tokenBuffer;
-    private GrammarToken[] backBuffer;
+    private CFToken[] tokenBuffer;
+    private CFToken[] backBuffer;
 
     public GroundSequenceRunner(StochasticGrammar<T> grammar) {
         super(grammar);
-        tokenBuffer = new GrammarToken[DEFAULT_BUFFER_SIZE];
-        backBuffer = new GrammarToken[DEFAULT_BUFFER_SIZE];
+        tokenBuffer = new CFToken[DEFAULT_BUFFER_SIZE];
+        backBuffer = new CFToken[DEFAULT_BUFFER_SIZE];
     }
 
     /**
@@ -80,7 +79,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
             int i = 0; // i indexes tokenBuffer
             int j = 0; // j indexes backBuffer
             while(i < tokenBuffer.length && tokenBuffer[i] != null) {
-                GrammarToken[] tokens = tokenBuffer[i++].replace(rand);
+                CFToken[] tokens = tokenBuffer[i++].replace(rand);
                 if(tokens.length != 0) {
                     tokensChanged = true;
                     // Insert new tokens
@@ -107,7 +106,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
         T result = grammar.blankEntity();
         int i = 0;
         while (tokenBuffer[i] != null) {
-            result = ((GrammarToken<T>)tokenBuffer[i++]).act(result);
+            result = ((CFToken<T>)tokenBuffer[i++]).act(result);
         }
         return result;
     }
@@ -124,7 +123,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
      * swapBuffers swaps the front and back buffers.
      */
     private void swapBuffers() {
-        GrammarToken[] temp = tokenBuffer;
+        CFToken[] temp = tokenBuffer;
         tokenBuffer = backBuffer;
         backBuffer = temp;
     }
