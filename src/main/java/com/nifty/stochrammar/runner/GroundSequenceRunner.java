@@ -73,7 +73,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
 
         boolean tokensChanged = true;
 
-        // Generates a string of GroundTokens.
+        // Generates a sequence of GroundTokens.
         while (tokensChanged) {
             tokensChanged = false;
 
@@ -81,7 +81,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
             int j = 0; // j indexes backBuffer
             while(i < tokenBuffer.length && tokenBuffer[i] != null) {
                 GrammarToken[] tokens = tokenBuffer[i++].replace(rand);
-                if(tokens != null) {
+                if(tokens.length != 0) {
                     tokensChanged = true;
                     // Insert new tokens
                     for (int k = 0; k < tokens.length; k++) {
@@ -89,7 +89,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
                         if(j >= backBuffer.length) extendBackBuffer();
                     }
                 } else {
-                    // We received null: this was a ground token, so let's not overwrite it in the next pass.
+                    // We received an empty array. This was a ground token, so let's not overwrite it on the next pass.
                     backBuffer[j++] = tokenBuffer[i-1];
                     if(j >= backBuffer.length) extendBackBuffer();
                 }
@@ -107,7 +107,7 @@ public class GroundSequenceRunner<T> extends GrammarRunner<T> {
         T result = grammar.blankEntity();
         int i = 0;
         while (tokenBuffer[i] != null) {
-            result = ((GroundToken<T>)tokenBuffer[i++]).act(result);
+            result = ((GrammarToken<T>)tokenBuffer[i++]).act(result);
         }
         return result;
     }

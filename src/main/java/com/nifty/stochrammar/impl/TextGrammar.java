@@ -55,7 +55,7 @@ public class TextGrammar implements StochasticGrammar<StringBuilder>, GrammarTok
 
     @Override
     public GrammarToken<StringBuilder>[] replace(Random rand) {
-        if(!replaceMap.containsKey(ROOT_KEY)) return new GrammarToken[0];
+        if(!replaceMap.containsKey(ROOT_KEY)) return GrammarToken.EMPTY;
         ArrayList<BaseToken[]> roots = replaceMap.get(ROOT_KEY);
         return roots.get(rand.nextInt(roots.size()));
     }

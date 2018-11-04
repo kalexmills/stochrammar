@@ -27,16 +27,16 @@ import java.util.Random;
  * @param <T> extends Grammarable the type of object which this stochastic grammar can produce.
  */
 public interface GrammarToken<T> {
-    Random DEFAULT_RAND = new Random();
     /**
-     * A grammar token which returns an empty array.
+     * EMPTY is a grammar token which returns an empty array. Clients should save some memory by using this instead of
+     * constructing their own empty array.
      */
-    GrammarToken EMPTY = new GrammarToken() {
-        @Override
-        public GrammarToken[] replace(Random rand) {
-            return new GrammarToken[0];
-        }
-    };
+    GrammarToken[] EMPTY = new GrammarToken[0];
+
+    /**
+     * DEFAULT_RAND is a default random number generator used by clients who don't care enough to construct their own.
+     */
+    Random DEFAULT_RAND = new Random();
 
     default GrammarToken<T>[] replace() {
         return replace(DEFAULT_RAND);

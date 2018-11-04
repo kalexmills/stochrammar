@@ -26,11 +26,11 @@ import java.util.Random;
 public abstract class GroundToken<T> implements GrammarToken<T> {
 
     /**
-     * @reutrn null to indicate that this ground token cannot be replaced.
+     * @reutrn an empty array to indicate that this ground token cannot be replaced.
      */
     @Override
     public GrammarToken<T>[] replace(Random rand) {
-        return null;
+        return GrammarToken.EMPTY;
     }
 
     public abstract T act(T object);
