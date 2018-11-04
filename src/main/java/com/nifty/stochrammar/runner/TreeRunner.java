@@ -34,13 +34,12 @@ public class TreeRunner<T> extends GrammarRunner<T> {
     // TODO: This would be much more performant if it didn't construct an actual tree at all.
 
     public static enum TraversalType {
-        POST_ORDER,
-        PRE_ORDER,
-        LEVEL_ORDER
+        DEPTH_FIRST,
+        BREADTH_FIRST
     }
 
     private TreeNode root;
-    private TraversalType traversalType = TraversalType.PRE_ORDER;
+    private TraversalType traversalType = TraversalType.DEPTH_FIRST;
 
     public TreeRunner(StochasticGrammar<T> grammar) {
         super(grammar);
@@ -66,9 +65,10 @@ public class TreeRunner<T> extends GrammarRunner<T> {
 
             GrammarToken[] tokens = node.token.replace(rand);
             if (tokens != null) {
+
                 node.addChildren(tokens);
-                for (int i = 0; i < tokens.length; ++i) {
-                    frontier.push(new TreeNode(tokens[i]));
+                for (int i = 0; i < node.nChildren; ++i) {
+                    frontier.push(node.children[i]);
                 }
             }
         }
@@ -78,29 +78,22 @@ public class TreeRunner<T> extends GrammarRunner<T> {
         TraversalSequence sequence;
         switch (traversalType) {
             default:
-            case POST_ORDER:
-            case PRE_ORDER:
+            case DEPTH_FIRST:
                 sequence = new TraversalStack();
                 break;
-            case LEVEL_ORDER:
+            case BREADTH_FIRST:
                 sequence = new TraversalQueue();
                 break;
         }
         T entity = grammar.blankEntity();
         sequence.add(root);
         while(!sequence.isEmpty()) {
-            TreeNode curr = sequence.next();
+            TreeNode<T> curr = sequence.next();
 
-            if (traversalType == TraversalType.PRE_ORDER) {
-                curr.token.act(entity);
-            }
             for (int i = 0; i < curr.nChildren; ++i) {
                 sequence.add(curr.children[i]);
             }
-            if (traversalType == TraversalType.POST_ORDER ||
-                traversalType == TraversalType.LEVEL_ORDER) {
-                curr.token.act(entity);
-            }
+            entity = curr.token.act(entity);
         }
         return entity;
     }
@@ -156,23 +149,29 @@ public class TreeRunner<T> extends GrammarRunner<T> {
         private static final int DEFAULT_ARITY = 4;
         private TreeNode[] children;
         private int nChildren = 0;
-        private GrammarToken<T> token;
+        GrammarToken<T> token;
 
         public TreeNode(GrammarToken<T> token) {
             this(token, DEFAULT_ARITY);
         }
 
         public TreeNode(GrammarToken<T> token, int arity) {
+            this.token = token;
             this.children = new TreeNode[4];
         }
 
         public void addChildren(GrammarToken<T>... tokens) {
+            // Double size of children array if needed.
             if (nChildren + tokens.length < children.length) {
                 int newLen = Math.max(children.length*2, nChildren + tokens.length);
                 children = Arrays.copyOf(children, newLen);
             }
-            System.arraycopy(tokens, 0, children, nChildren, tokens.length);
+            // Insert TreeNode into children array.
+            for (int i = 0; i < tokens.length; ++i) {
+                children[nChildren + i] = new TreeNode(tokens[i]);
+            }
+            // Update dynamic array length.
+            nChildren += tokens.length;
         }
     }
-
 }

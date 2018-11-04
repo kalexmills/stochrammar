@@ -30,6 +30,8 @@ import static org.hamcrest.CoreMatchers.*;
 /**
  * TextGrammarTest implements a test of the TextGrammar implementation. The tests in this class are stochastic, so they
  * should fail only occasionally.
+ *
+ * TODO: Make tests deterministic by setting the random seed.
  */
 public class TextGrammarTest {
 
@@ -37,7 +39,7 @@ public class TextGrammarTest {
     Pattern ABRACADABRA = Pattern.compile("(abra|cadabra)+");
 
     @Test
-    public void recursionTest() {
+    public void testRecursion() {
         // Create some simple regular expressions, and ensure that out of 100 samples, at least one of them is
         // recursive. This test is stochastic, and may occasionally fail.
         TextGrammar g = new TextGrammar();
@@ -59,7 +61,7 @@ public class TextGrammarTest {
     }
 
     @Test
-    public void regexTest() {
+    public void testRegex() {
         // Create some simple regular expressions and test membership of 100 samples using a regex match.
         TextGrammar g = new TextGrammar();
 
@@ -78,7 +80,7 @@ public class TextGrammarTest {
     }
 
     @Test
-    public void noRootTest() {
+    public void testEmptyRoot() {
         // A grammar with an empty root should always generate the empty string, even if it contains other rules.
         TextGrammar g = new TextGrammar();
         g.addRule("A", g.new Literal("abra"),

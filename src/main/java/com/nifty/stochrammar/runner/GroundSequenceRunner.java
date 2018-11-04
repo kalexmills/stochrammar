@@ -35,7 +35,7 @@ import java.util.Random;
  * certainly more memory efficient to have only one GroundSequenceRunner in memory that is shared by all clients.
  */
 public class GroundSequenceRunner<T> extends GrammarRunner<T> {
-    private static final int DEFAULT_BUFFER_SIZE = 32;
+    static final int DEFAULT_BUFFER_SIZE = 32;
 
     // Null-terminated buffers used to collect tokens as they are created.
     // N.B.: A more space-efficient implementation would probably use one set of buffers per running thread.

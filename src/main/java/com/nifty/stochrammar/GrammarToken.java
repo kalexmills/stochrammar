@@ -27,6 +27,7 @@ import java.util.Random;
  * @param <T> extends Grammarable the type of object which this stochastic grammar can produce.
  */
 public interface GrammarToken<T> {
+    Random DEFAULT_RAND = new Random();
     /**
      * A grammar token which returns an empty array.
      */
@@ -36,6 +37,10 @@ public interface GrammarToken<T> {
             return new GrammarToken[0];
         }
     };
+
+    default GrammarToken<T>[] replace() {
+        return replace(DEFAULT_RAND);
+    }
 
     /**
      * Replaces this GrammarToken with one or more others. Repeated invocations applied to the GrammarTokens that result
