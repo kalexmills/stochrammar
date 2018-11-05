@@ -50,14 +50,14 @@ public class TextGrammar extends CFToken<StringBuilder> implements StochasticGra
      */
     public void addRule(String key, CFToken<StringBuilder>... tokens) {
         if(!replaceMap.containsKey(key)) replaceMap.put(key, new ArrayList<>());
-        replaceMap.get(key).add((CFToken<StringBuilder>[])tokens);
+        replaceMap.get(key).add(tokens);
     }
 
     @Override
     public CFToken<StringBuilder>[] replace(Random rand) {
         if(!replaceMap.containsKey(ROOT_KEY)) return CFToken.EMPTY;
         ArrayList<CFToken<StringBuilder>[]> roots = replaceMap.get(ROOT_KEY);
-        return (CFToken<StringBuilder>[]) roots.get(rand.nextInt(roots.size()));
+        return roots.get(rand.nextInt(roots.size()));
     }
 
     @Override
@@ -107,7 +107,7 @@ public class TextGrammar extends CFToken<StringBuilder> implements StochasticGra
             if (!replaceMap.containsKey(key)) throw new ReplaceException("Grammar does not contain key " + key);
 
             ArrayList<CFToken<StringBuilder>[]> tokens = replaceMap.get(key);
-            return (CFToken<StringBuilder>[]) tokens.get(rand.nextInt(tokens.size()));
+            return tokens.get(rand.nextInt(tokens.size()));
         }
     }
 
