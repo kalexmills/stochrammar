@@ -1,4 +1,4 @@
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;
 
 import org.junit.Test;
 

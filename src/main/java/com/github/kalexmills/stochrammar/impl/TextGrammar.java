@@ -16,11 +16,11 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Stochrammar.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.nifty.stochrammar.impl;
+package com.github.kalexmills.stochrammar.impl;
 
-import com.nifty.stochrammar.CFToken;
-import com.nifty.stochrammar.GroundToken;
-import com.nifty.stochrammar.StochasticGrammar;
+import com.github.kalexmills.stochrammar.CFToken;
+import com.github.kalexmills.stochrammar.GroundToken;
+import com.github.kalexmills.stochrammar.StochasticGrammar;
 
 import java.util.ArrayList;
 import java.util.HashMap;

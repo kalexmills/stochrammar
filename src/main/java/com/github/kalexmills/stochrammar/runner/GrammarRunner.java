@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Stochrammar.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.nifty.stochrammar.runner;
+package com.github.kalexmills.stochrammar.runner;
 
-import com.nifty.stochrammar.StochasticGrammar;
+import com.github.kalexmills.stochrammar.StochasticGrammar;
 
 import java.util.Random;
 

@@ -1,4 +1,4 @@
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;
 
 /**
  * Token acts on objects of type T

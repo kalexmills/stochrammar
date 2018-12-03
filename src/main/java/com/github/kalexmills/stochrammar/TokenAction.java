@@ -1,4 +1,4 @@
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;
 
 /**
  * TokenAction is a functional interface which defines the type of action a token may take.

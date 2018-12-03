@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Stochrammar.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;
 
 import java.util.Random;
 
@@ -30,7 +30,7 @@ public abstract class GroundToken<T> extends CFToken<T> {
      */
     @Override
     public CFToken<T>[] replace(Random rand) {
-        return CFToken.EMPTY;
+        return EMPTY;
     }
 
 }

@@ -5,4 +5,4 @@
  *
  * @author K. Alex Mills
  */
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;

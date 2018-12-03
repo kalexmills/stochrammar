@@ -16,7 +16,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Stochrammar.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.nifty.stochrammar;
+package com.github.kalexmills.stochrammar;
 
 /**
  * Encapsulates the root production rule of a context-free stochastic grammar.

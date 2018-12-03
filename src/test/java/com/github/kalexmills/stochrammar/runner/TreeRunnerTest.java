@@ -1,15 +1,15 @@
-package com.nifty.stochrammar.runner;
+package com.github.kalexmills.stochrammar.runner;
 
-import com.nifty.stochrammar.CFToken;
-import com.nifty.stochrammar.GroundToken;
-import com.nifty.stochrammar.StochasticGrammar;
+import com.github.kalexmills.stochrammar.CFToken;
+import com.github.kalexmills.stochrammar.GroundToken;
+import com.github.kalexmills.stochrammar.StochasticGrammar;
 import org.junit.Test;
 
 import java.util.Random;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class GroundSequenceRunnerTest {
+public class TreeRunnerTest {
 
     /**
      * A convenient Ground class used by multiple tests.
@@ -43,7 +43,7 @@ public class GroundSequenceRunnerTest {
             }
         }
 
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new Grammar());
+        TreeRunner<String> underTest = new TreeRunner<>(new Grammar());
 
         assertThat(underTest.run()).isEqualTo("b");
     }
@@ -77,7 +77,8 @@ public class GroundSequenceRunnerTest {
                 return "";
             }
         }
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new Grammar());
+
+        TreeRunner<String> underTest = new TreeRunner<>(new Grammar());
 
         assertThat(underTest.run()).isEqualTo("abc chain replaced with ground");
     }
@@ -110,21 +111,22 @@ public class GroundSequenceRunnerTest {
             }
         }
 
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new Grammar());
+        TreeRunner<String> underTest = new TreeRunner<>(new Grammar());
+        underTest.setTraversalType(TreeRunner.TraversalType.BREADTH_FIRST);
 
         assertThat(underTest.run()).isEqualTo("hello world");
     }
 
     @Test
-    public void testDoesNotInvokeActOnNonGroundTokens() {
+    public void testInvokesActOnNonGroundTokens() {
         class TokenA extends CFToken<String> {
             public TokenA() {
                 this.setAction((str) -> "A");
             }
-            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new Ground("TEST PASSED") }; }
+            public CFToken<String>[] replace(Random rand) { return new CFToken[] { new Ground("B") }; }
         }
         /**
-         * A -> "TEST PASSED"
+         * A -> "AB"
          */
         class Grammar implements StochasticGrammar<String> {
             public CFToken<String> generateRootToken() {
@@ -136,17 +138,11 @@ public class GroundSequenceRunnerTest {
             }
         }
 
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new Grammar());
+        TreeRunner<String> underTest = new TreeRunner<>(new Grammar());
 
-        assertThat(underTest.run()).isEqualTo("TEST PASSED");
+        assertThat(underTest.run()).isEqualTo("AB");
     }
 
-    @Test
-    public void testInvokesActOnGroundsAccordingToPreOrderTraversal() {
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new TraversalTestGrammar());
-
-        assertThat(underTest.run()).isEqualTo("abdebca");
-    }
     /**
      * A -> aBCa
      * B -> bDEb
@@ -190,31 +186,18 @@ public class GroundSequenceRunnerTest {
     }
 
     @Test
-    public void testDynamicArrayResizing() {
-        class TokenA extends CFToken<String> {
-            public CFToken<String>[] replace(Random rand) {
-                // Check two rounds of doubling in the same iteration.
-                CFToken[] result = new CFToken[GroundSequenceRunner.DEFAULT_BUFFER_SIZE * 4];
-                for (int i = 0; i < result.length; ++i) {
-                    result[i] = new Ground("a");
-                }
-                return result;
-            }
-        }
-        class Grammar implements StochasticGrammar<String> {
-            public CFToken<String> generateRootToken() {
-                return new TokenA();
-            }
+    public void testDepthFirstTraversal() {
+        TreeRunner<String> underTest = new TreeRunner<>(new TraversalTestGrammar());
+        underTest.setTraversalType(TreeRunner.TraversalType.DEPTH_FIRST);
 
-            public String blankEntity() {
-                return "";
-            }
-        }
+        assertThat(underTest.run()).isEqualTo("acbedba");
+    }
 
-        GroundSequenceRunner<String> underTest = new GroundSequenceRunner<>(new Grammar());
+    @Test
+    public void testBreadthFirstTraversal() {
+        TreeRunner<String> underTest = new TreeRunner<>(new TraversalTestGrammar());
+        underTest.setTraversalType(TreeRunner.TraversalType.BREADTH_FIRST);
 
-        String entity = underTest.run();
-        assertThat(entity.length()).isEqualTo(GroundSequenceRunner.DEFAULT_BUFFER_SIZE*4);
-        assertThat(entity).matches("^a+$");
+        assertThat(underTest.run()).isEqualTo("aabbcde");
     }
 }

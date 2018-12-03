@@ -16,9 +16,9 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with Stochrammar.  If not, see <https://www.gnu.org/licenses/>.
  */
-package com.nifty.stochrammar.impl;
+package com.github.kalexmills.stochrammar.impl;
 
-import com.nifty.stochrammar.runner.GroundSequenceRunner;
+import com.github.kalexmills.stochrammar.runner.GroundSequenceRunner;
 import org.junit.Test;
 
 import java.util.regex.Pattern;
