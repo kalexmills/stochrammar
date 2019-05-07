@@ -28,7 +28,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.CoreMatchers.*;
 
 /**
- * TextGrammarTest implements a test of the TextGrammar implementation. The tests in this class are stochastic, so they
+ * TextGrammarTest implements a components of the TextGrammar implementation. The tests in this class are stochastic, so they
  * should fail only occasionally.
  *
  * TODO: Make tests deterministic by setting the random seed.
@@ -41,7 +41,7 @@ public class TextGrammarTest {
     @Test
     public void testRecursion() {
         // Create some simple regular expressions, and ensure that out of 100 samples, at least one of them is
-        // recursive. This test is stochastic, and may occasionally fail.
+        // recursive. This components is stochastic, and may occasionally fail.
         TextGrammar g = new TextGrammar();
 
         g.addRule(g.ROOT_KEY, g.new Literal("abra"));
@@ -62,7 +62,7 @@ public class TextGrammarTest {
 
     @Test
     public void testRegex() {
-        // Create some simple regular expressions and test membership of 100 samples using a regex match.
+        // Create some simple regular expressions and components membership of 100 samples using a regex match.
         TextGrammar g = new TextGrammar();
 
         g.addRule(g.ROOT_KEY, g.new Literal("abra"));

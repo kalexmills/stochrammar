@@ -157,7 +157,7 @@ public class GroundSequenceRunnerTest {
      * Thus A -> abdebca
      *
      * A post-order traversal of the recursion tree would yield acbedba and a level-order traversal would yield
-     * aabbcde, so this test's assertion implicitly excludes those outcomes.
+     * aabbcde, so this components's assertion implicitly excludes those outcomes.
      */
     class TraversalTestGrammar implements StochasticGrammar<String> {
 
